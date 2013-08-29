@@ -2,7 +2,7 @@
 /*
 Plugin Name: Pronamic Google Conversion
 Plugin URI: http://pronamic.eu/wordpress/events/
-Description: This plugin add some basic Event functionality to WordPress
+Description: This plugin adds an shortcode to easily integrate an Google Conversion code
 
 Version: 1.0.0
 Requires at least: 3.0
@@ -10,7 +10,7 @@ Requires at least: 3.0
 Author: Pronamic
 Author URI: http://pronamic.eu/
 
-Text Domain: google_conversion
+Text Domain: pronamic_google_conversion
 Domain Path: /languages/
 
 License: GPL
@@ -21,7 +21,7 @@ GitHub URI: https://github.com/pronamic/wp-google-conversion
 /**
  * Google Conversion Code
  */
-function shortcode_google_conversion_code( $atts ) {
+function pronamic_google_conversion_shortcode( $atts ) {
 	extract( shortcode_atts( array(
 		'id'       => null,
 		'language' => 'en',
@@ -66,4 +66,4 @@ function shortcode_google_conversion_code( $atts ) {
 	return $output;
 }
 
-add_shortcode( 'google_conversion_code', 'shortcode_google_conversion_code' );
+add_shortcode( 'google_conversion_code', 'pronamic_google_conversion_shortcode' );

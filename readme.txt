@@ -6,7 +6,7 @@ Requires at least: 3.0
 Tested up to: 3.6
 Stable tag: 1.0.0
 
-...
+This plugin adds an shortcode to easily integrate an Google Conversion code.
 
 == Description ==
 
