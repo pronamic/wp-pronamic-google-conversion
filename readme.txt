@@ -10,20 +10,34 @@ This plugin adds an shortcode to easily integrate an Google Conversion code.
 
 == Description ==
 
-...
+Easily integrate Google Conversion codes with an shortcode:
+
+	[google_conversion_code id="1234567890" language="en" format="2" color="ffffff" label="wEn5cAbraqabrecr" value="0" remarketing_only="false"]
 
 
 == Installation ==
+
+1.	Upload the `pronamic-google-conversion` folder to the `/wp-content/plugins/` directory
+2.	Activate the plugin through the 'Plugins' menu in WordPress
+
+
+== Frequently Asked Questions ==
 
 ...
 
 
 == Screenshots ==
 
-...
+1.	
 
 
 == Changelog ==
+
+= 1.0.0 =
+*	Initial release
+
+
+== Upgrade Notice ==
 
 = 1.0.0 =
 *	Initial release

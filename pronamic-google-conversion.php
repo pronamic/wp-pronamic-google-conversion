@@ -23,12 +23,13 @@ GitHub URI: https://github.com/pronamic/wp-google-conversion
  */
 function pronamic_google_conversion_shortcode( $atts ) {
 	extract( shortcode_atts( array(
-		'id'       => null,
-		'language' => 'en',
-		'format'   => 3,
-		'color'    => '666666',
-		'label'    => '',
-		'value'    => 0,
+		'id'               => null,
+		'language'         => 'en',
+		'format'           => 3,
+		'color'            => '666666',
+		'label'            => '',
+		'value'            => 0,
+		'remarketing_only' => false
 	), $atts ) );
 
 	$crlf = "\r\n";
@@ -42,7 +43,7 @@ function pronamic_google_conversion_shortcode( $atts ) {
 
 	$output = '';
 
-	$output .= '<!-- Google Code for Bezoekers Pagina Douchegoten Remarketing List -->' . $crlf;
+	$output .= '<!-- Google Code for ? -->' . $crlf;
 	$output .= '<script type="text/javascript">' . $crlf;
 	$output .= '/* <![CDATA[ */' . $crlf;
 	$output .= sprintf( 'var google_conversion_id = %d;', $id ) . $crlf;
@@ -51,6 +52,7 @@ function pronamic_google_conversion_shortcode( $atts ) {
 	$output .= sprintf( 'var google_conversion_color = "%s";', $color ) . $crlf;
 	$output .= sprintf( 'var google_conversion_label = "%s";', $label ) . $crlf;
 	$output .= sprintf( 'var google_conversion_value = %d;', $value ) . $crlf;
+	$output .= sprintf( 'var google_remarketing_only = %s;', filter_var( $remarketing_only, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false' ) . $crlf;
 	$output .= '/* ]]> */' . $crlf;
 	$output .= '</script>' . $crlf;
 
@@ -59,7 +61,7 @@ function pronamic_google_conversion_shortcode( $atts ) {
 
 	$output .= '<noscript>' . $crlf;
 	$output .= '<div style="display:inline;">' . $crlf;
-	$output .= sprintf( '<img height="1" width="1" style="border-style:none;" alt="" src="%s"/>', esc_attr( $noScriptImageUrl ) ) . $crlf;
+	$output .= sprintf( '<img height="1" width="1" style="border-style:none;" alt="" src="%s"/>', esc_attr( $no_script_image_url ) ) . $crlf;
 	$output .= '</div>' . $crlf;
 	$output .= '</noscript>' . $crlf;
 
