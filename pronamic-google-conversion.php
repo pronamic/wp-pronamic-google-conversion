@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: Google Conversion
+Plugin Name: Pronamic Google Conversion
 Plugin URI: http://pronamic.eu/wordpress/events/
 Description: This plugin add some basic Event functionality to WordPress
 

@@ -1,7 +1,7 @@
-=== Google Conversion ===
+=== Pronamic Google Conversion ===
 Contributors: pronamic, remcotolsma 
-Tags: google, conversion, shortcode
-Donate link: http://pronamic.eu/donate/?for=wp-plugin-pronamic-events&source=wp-plugin-readme-txt
+Tags: google, conversion, shortcode, pronamic
+Donate link: http://pronamic.eu/donate/?for=wp-plugin-pronamic-google-conversion&source=wp-plugin-readme-txt
 Requires at least: 3.0
 Tested up to: 3.6
 Stable tag: 1.0.0
