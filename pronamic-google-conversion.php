@@ -19,9 +19,39 @@ GitHub URI: https://github.com/pronamic/wp-google-conversion
 */
 
 /**
+ * Initialize
+ */
+function pronamic_google_conversion_init() {
+	global $pronamic_google_conversion_codes;
+	
+	$pronamic_google_conversion_codes = array();
+}
+
+add_action( 'init', 'pronamic_google_conversion_init' );
+
+/**
+ * Footer
+ */
+function pronamic_google_conversion_footer() {
+	global $pronamic_google_conversion_codes;
+	
+	echo implode( "\r\n", $pronamic_google_conversion_codes );
+}
+
+add_action( 'wp_footer', 'pronamic_google_conversion_footer' );
+
+/**
  * Google Conversion Code
+ * 
+ * There is an issue with CDATA in the content, so we buffer the codes and
+ * output in the footer.
+ * 
+ * @see http://wordpress.stackexchange.com/a/68103
+ * @see http://core.trac.wordpress.org/ticket/3670
  */
 function pronamic_google_conversion_shortcode( $atts ) {
+	global $pronamic_google_conversion_codes;
+
 	extract( shortcode_atts( array(
 		'id'               => null,
 		'language'         => 'en',
@@ -34,36 +64,42 @@ function pronamic_google_conversion_shortcode( $atts ) {
 
 	$crlf = "\r\n";
 
-	$no_script_image_url = sprintf( 'http://www.googleadservices.com/pagead/conversion/%d/', $id );
-	$no_script_image_url = add_query_arg( array(
-		'label'  => $label,
-		'guid'   => 'ON',
-		'script' => 0
-	), $no_script_image_url );
+	if ( ! isset( $pronamic_google_conversion_codes[$id] ) ) {
+		$no_script_image_url = sprintf( 'http://www.googleadservices.com/pagead/conversion/%d/', $id );
+		$no_script_image_url = add_query_arg( array(
+			'label'  => $label,
+			'guid'   => 'ON',
+			'script' => 0
+		), $no_script_image_url );
+	
+		$code = '';
+	
+		$code .= sprintf( '<!-- Google Code for %s -->', $id ) . $crlf;
+		$code .= '<script type="text/javascript">' . $crlf;
+		$code .= '/* <![CDATA[ */' . $crlf;
+		$code .= sprintf( 'var google_conversion_id = %d;', $id ) . $crlf;
+		$code .= sprintf( 'var google_conversion_language = "%s";', $language ) . $crlf;
+		$code .= sprintf( 'var google_conversion_format = "%s";', $format ) . $crlf;
+		$code .= sprintf( 'var google_conversion_color = "%s";', $color ) . $crlf;
+		$code .= sprintf( 'var google_conversion_label = "%s";', $label ) . $crlf;
+		$code .= sprintf( 'var google_conversion_value = %d;', $value ) . $crlf;
+		$code .= sprintf( 'var google_remarketing_only = %s;', filter_var( $remarketing_only, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false' ) . $crlf;
+		$code .= '/* ]]> */' . $crlf;
+		$code .= '</script>' . $crlf;
+	
+		$code .= '<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">' . $crlf;
+		$code .= '</script>' . $crlf;
+	
+		$code .= '<noscript>' . $crlf;
+		$code .= '<div style="display:inline;">' . $crlf;
+		$code .= sprintf( '<img height="1" width="1" style="border-style:none;" alt="" src="%s"/>', esc_attr( $no_script_image_url ) ) . $crlf;
+		$code .= '</div>' . $crlf;
+		$code .= '</noscript>' . $crlf;
+	
+		$pronamic_google_conversion_codes[] = $code;
+	}
 
-	$output = '';
-
-	$output .= '<!-- Google Code for ? -->' . $crlf;
-	$output .= '<script type="text/javascript">' . $crlf;
-	$output .= '/* <![CDATA[ */' . $crlf;
-	$output .= sprintf( 'var google_conversion_id = %d;', $id ) . $crlf;
-	$output .= sprintf( 'var google_conversion_language = "%s";', $language ) . $crlf;
-	$output .= sprintf( 'var google_conversion_format = "%s";', $format ) . $crlf;
-	$output .= sprintf( 'var google_conversion_color = "%s";', $color ) . $crlf;
-	$output .= sprintf( 'var google_conversion_label = "%s";', $label ) . $crlf;
-	$output .= sprintf( 'var google_conversion_value = %d;', $value ) . $crlf;
-	$output .= sprintf( 'var google_remarketing_only = %s;', filter_var( $remarketing_only, FILTER_VALIDATE_BOOLEAN ) ? 'true' : 'false' ) . $crlf;
-	$output .= '/* ]]> */' . $crlf;
-	$output .= '</script>' . $crlf;
-
-	$output .= '<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">' . $crlf;
-	$output .= '</script>' . $crlf;
-
-	$output .= '<noscript>' . $crlf;
-	$output .= '<div style="display:inline;">' . $crlf;
-	$output .= sprintf( '<img height="1" width="1" style="border-style:none;" alt="" src="%s"/>', esc_attr( $no_script_image_url ) ) . $crlf;
-	$output .= '</div>' . $crlf;
-	$output .= '</noscript>' . $crlf;
+	$output = sprintf( '<!-- Google Code %s moved to footer -->', $id );
 
 	return $output;
 }
