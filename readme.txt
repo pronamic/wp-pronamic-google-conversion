@@ -35,13 +35,13 @@ Easily integrate Google Conversion codes with an shortcode:
 == Changelog ==
 
 = 1.0.0 =
-*	Initial release
+*	Initial release.
 
 
 == Upgrade Notice ==
 
 = 1.0.0 =
-*	Initial release
+*	Initial release.
 
 
 == Links ==
