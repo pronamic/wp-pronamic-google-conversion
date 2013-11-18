@@ -28,7 +28,8 @@ Easily integrate Google Conversion codes with an shortcode:
 
 == Screenshots ==
 
-1.	
+1.	Edit page width Google conversion code shortcode.
+2.	View source of page with Google conversion code.
 
 
 == Changelog ==
